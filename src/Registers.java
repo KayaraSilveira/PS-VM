@@ -124,7 +124,7 @@ public class Registers {
         else return 1;
     }
 
-    public boolean isLower() {
+    /*public boolean isLower() {
         return CC < 0;
     }
 
@@ -134,9 +134,9 @@ public class Registers {
 
     public boolean isGreater() {
         return CC > 0;
-    }
+    }*/
 
-    public void setSW(int value) {
+    public void setSW(int value) { //MEU DEUS MEU SENHOR ME AJUDA POR FAVOR
         if ((value & 0x40) == 0x40) CC = -1;
         else if ((value & 0x80) == 0x80) CC = 1;
         else CC = 0;
@@ -175,7 +175,7 @@ public class Registers {
     }
 
     // get signed
-    public int gets(int idx) {
+    /*public int gets(int idx) {
         switch (idx) {
             case rA: return getAs();
             case rX: return getXs();
@@ -190,7 +190,7 @@ public class Registers {
             default: Logger.fmterr("Invalid register index '%d'", idx);
         }
         return 0;
-    }
+    }*/
 
     public void set(int idx, int value) {
         switch (idx) {
