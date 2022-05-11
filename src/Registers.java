@@ -137,8 +137,8 @@ public class Registers {
     }*/
 
     public void setSW(int value) { //MEU DEUS MEU SENHOR ME AJUDA POR FAVOR
-        if ((value & 0x40) == 0x40) CC = -1;
-        else if ((value & 0x80) == 0x80) CC = 1;
+        if (value == -1) CC = -1;
+        else if (value == 1) CC = 1;
         else CC = 0;
     }
 
@@ -169,7 +169,7 @@ public class Registers {
             case rF: return (int)getF();    // TODO
             case rPC: return getPC();       // TODO
             case rSW: return getSW();       // TODO
-            default: Logger.fmterr("Invalid register index '%d'", idx);
+            //default: Logger.fmterr("Invalid register index '%d'", idx);
         }
         return 0;
     }
@@ -203,7 +203,7 @@ public class Registers {
             case rF: setF(value); break;
             case rPC: setPC(value); break;
             case rSW: setSW(value); break;
-            default: Logger.fmterr("Invalid register index '%d'", idx);
+            //default: Logger.fmterr("Invalid register index '%d'", idx);
         }
     }
 
