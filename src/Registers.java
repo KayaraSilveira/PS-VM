@@ -100,21 +100,21 @@ public class Registers {
         else if (valueInt == 1) CC = "1";
         else CC = "0";
     }
-    /*public String isLower() {
-        return CC < 0;
+    public boolean isLower() {
+        return Integer.parseInt(CC) < 0;
     }
 
     public boolean isEqual() {
-        return CC == 0;
+        return Integer.parseInt(CC) == 0;
     }
 
     public boolean isGreater() {
-        return CC > 0;
+        return Integer.parseInt(CC) > 0;
     }
 
     public void setSWAfterCompare(String compare) {
         CC = compare;
-    }*/
+    }
 
     // ***** getter/setter by register index ****
 
