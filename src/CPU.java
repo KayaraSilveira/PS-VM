@@ -1,5 +1,6 @@
 public class CPU {
     public final Registers reg;
+    private int instructionCount;
     public final Memory mem;
     public CPU() {
         this.reg = new Registers();
@@ -82,6 +83,51 @@ public class CPU {
             default: return false;
         }
         return true;
+    }
+
+    public int fetch() {
+        int b = mem.getByte(reg.getPC());
+        reg.incPC();
+        return b;
+    }
+    public void execute(){
+        instructionCount++;
+        // fetch first byte
+        int opcode = fetch();
+        // try format 1
+        if (execF1(opcode)) return;
+        // fetch one more byte
+        int op = fetch();
+        // try format 2
+        if (execF2(opcode, op)) return;
+        // otherwise it is format SIC, F3 or F4
+        Flags flags = new Flags(opcode, op);
+        // operand depends on instruction format
+        int operand;
+        // check if standard SIC
+        if (flags.isSic()) {
+            operand = flags.operandSic(op, fetch());
+            // check if F4 (extended)
+        } else if (flags.isExtended()) {
+            operand = flags.operandF4(op, fetch(), fetch());
+            if (flags.isRelative()) invalidAddressing();
+            // otherwise it is F3
+        } else {
+            operand = flags.operandF3(op, fetch());
+            if (flags.isPCRelative())
+                operand = flags.operandPCRelative(operand) + registers.getPC();
+            else if (flags.isBaseRelative())
+                operand += registers.getB();
+            else if (!flags.isAbsolute())
+                invalidAddressing();  // both PC and base at the same time
+        }
+        // SIC, F3, F4 -- all support indexed addressing, but only when simple TA calculation used
+        if (flags.isIndexed())
+            if (flags.isSimple()) operand += registers.getXs();
+            else invalidAddressing();
+        // try to execute
+        if (execSICF3F4(opcode & 0xFC, flags, operand)) return;
+        invalidOpcode(opcode);
     }
 }
 
