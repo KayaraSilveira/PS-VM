@@ -6,7 +6,8 @@ public class CPU {
         this.mem = new Memory();
     }
     private boolean F2(String opcode, String operand) {
-        // Formato 2: Op op1, op2
+        //
+        //  Formato 2: Op op1, op2
         int op1 = Conversion.stringBinaryToInt(operand.substring(0, operand.length()/2));
         int op2 = Conversion.stringBinaryToInt(operand.substring(operand.length()/2));
 
