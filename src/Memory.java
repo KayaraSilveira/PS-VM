@@ -2,76 +2,49 @@ import java.util.Arrays;
 
 public class Memory{
 
-    public final byte[] memoria;
+    public final String[][] memoria;
+
+    Conversion conversion = new Conversion();
 
     public Memory(){
-        this.memoria = new byte[1024];
+        this.memoria = new String[1024][8];
     }
 
     public void reseta(){
-        Arrays.fill(memoria, (byte)0);
+        Arrays.fill(memoria, "0");
     }
 
-    public boolean confereEndereco(int endereco){
-        boolean verifica = endereco < 0 || endereco >= memoria.length;
+    public boolean confereEndereco(String endereco){
+        int enderecoInt;
+        enderecoInt = conversion.stringBinaryToInt(endereco);
+        boolean verifica = enderecoInt < 0 || enderecoInt >= 1024;
         if(verifica){
             System.out.println("Endereço de memória é inválido.");
         }
-
         return verifica;
     }
 
-    public int getByteRaw(int address) {
-        if (checkAddress(address)) {
-            return 0;
+    public String getByteRaw(String address) {
+        int addressInt, i;
+        String byteReturn = "";
+        confereEndereco(address);
+        addressInt = conversion.stringBinaryToInt(address);
+        for(i = 0; i < 8; i++) {
+            byteReturn =  byteReturn + memoria[addressInt][i];
         }
-        return ((int)memory[address]);
+        return byteReturn;
     }
 
-    public void setByteRaw(int address, int value) {
-        if (checkAddress(address)) {
+    public void setByteRaw(String address, String value) {
+        if (confereEndereco(address)) {
             return;
         }
-        memory[address] = (byte)(value);
+        int addressInt, i;
+        addressInt = conversion.stringBinaryToInt(address);
+        for(i = 0; i < 8; i++) {
+            memoria[addressInt][i] =  value.substring(0 + i, 0 + i + 1);
+        }
     }
 
-
-    /*public int getWordRaw(int address) {
-        return getByteRaw(address + 2) | getByteRaw(address + 1) << 8 | getByteRaw(address) << 16;
-    }
-
-    public void setWordRaw(int address, int value) {
-        setByteRaw(address, value >> 16);
-        setByteRaw(address + 1, value >> 8);
-        setByteRaw(address + 2, value);
-    }
-
-
-
-
-    public static long floatToBits(double value) {
-        return Double.doubleToLongBits(value) >> 16;
-    }
-
-    public static double bitsToFloat(long bits) {
-        return Double.longBitsToDouble(bits << 16);
-    }
-
-    public double getFloatRaw(int address) {
-        long bits = (long)getByteRaw(address)  << 40 | (long)getByteRaw(address+1) << 32 |
-                (long)getByteRaw(address+2) << 24 | getByteRaw(address+3) << 16 |
-                getByteRaw(address+4) << 8  | getByteRaw(address+5);
-        return SICXE.bitsToFloat(bits);
-    }
-
-    public void setFloatRaw(int address, double value) {
-        long bits = SICXE.floatToBits(value);
-        setByteRaw(address, (int)(bits >> 40));
-        setByteRaw(address + 1, (int)(bits >> 32));
-        setByteRaw(address + 2, (int)(bits >> 24));
-        setByteRaw(address + 3, (int)(bits >> 16));
-        setByteRaw(address + 4, (int)(bits >> 8));
-        setByteRaw(address + 5, (int)(bits));
-    }*/
 
 }

@@ -1,148 +1,110 @@
 public class Registers {
 
     // SIC commands counter
-    private int PC;
+    private String PC;
     // SIC 24-bit registers
-    private int A, X, L;
+    private String A, X, L;
     // SIC/XE 24-bit registers
-    private int S, T, B;
+    private String S, T, B;
     // SIC/XE 48-bit float register
-    private double F;
+    private String F;
     // condition code of status word register
-    private int CC;
+    private String CC;
+
+    Conversion conversion = new Conversion();
 
     // ***** getters/setters ********************
     // get   ... unsigned
     // get_s ... signed
 
-    public int getPC() {
+    public String getPC() {
         return PC;
     }
 
-    public void setPC(int val) {
+    public void setPC(String val) {
         PC = val;
     }
 
-    /*public void incPC() {
-        if (++PC > Machine.MAX_ADDRESS) {
-            Logger.fmterr("PC register overflow.");
-            PC = 0;
+    public void incPC() {
+        int pcInt;
+        pcInt = conversion.stringBinaryToInt(PC);
+        if (++pcInt > 1023) {
+            System.out.printf("PC overflow");
+            pcInt = 0;
         }
-    }*/
+        PC = conversion.intToStringBinary(pcInt);
+    }
 
-    public int getA() {
+    public String getA() {
         return A;
     }
 
-    /*public int getAs() {
-        return SICXE.swordToInt(A);
-    }*/
-
-    public void setA(int val) {
+    public void setA(String val) {
         A = val;
     }
 
-   /* public int getALo() {
-        return A & 0xFF;
-    }
-
-    public void setALo(int value) {
-        A = A & 0xFFFF00 | value & 0xFF;
-    }*/
-
-    public int getX() {
+    public String getX() {
         return X;
     }
 
-    /*public int getXs() {
-        return SICXE.swordToInt(X);
-    }*/
-
-    public void setX(int val) {
+    public void setX(String val) {
         X = val;
     }
 
-    public int getL() {
+    public String getL() {
         return L;
     }
 
-    /*public int getLs() {
-        return SICXE.swordToInt(L);
-    }*/
-
-    public void setL(int val) {
+    public void setL(String val) {
         L = val;
     }
 
-    public int getS() {
+    public String getS() {
         return S;
     }
 
-    /*public int getSs() {
-        return SICXE.swordToInt(S);
-    }*/
-
-    public void setS(int val) {
+    public void setS(String val) {
         S = val;
     }
 
-    public int getT() {
+    public String getT() {
         return T;
     }
 
-    /*public int getTs() {
-        return SICXE.swordToInt(T);
-    }*/
-
-    public void setT(int val) {
+    public void setT(String val) {
         T = val;
     }
 
-    public int getB() {
+    public String getB() {
         return B;
     }
 
-    /*public int getBs() {
-        return SICXE.swordToInt(B);
-    }*/
-
-    public void setB(int val) {
+    public void setB(String val) {
         B = val;
     }
 
-    public double getF() {
+    public String getF() {
         return F;
     }
 
-    public void setF(double val) {
+    public void setF(String val) {
         F = val;
     }
 
-    public int getSW() {
-        if (CC == 0) return 0;
-        else if (CC < 0) return -1;
-        else return 1;
+    public String getSW() {
+        return CC;
     }
 
-    /*public boolean isLower() {
-        return CC < 0;
+    public void setSW(String value) { //MEU DEUS MEU SENHOR ME AJUDA POR FAVOR
+        int valueInt;
+        valueInt = conversion.stringBinaryToInt(value);
+
+        if (valueInt == -1) CC = "-1";
+        else if (valueInt == 1) CC = "1";
+        else CC = "0";
     }
 
-    public boolean isEqual() {
-        return CC == 0;
-    }
-
-    public boolean isGreater() {
-        return CC > 0;
-    }*/
-
-    public void setSW(int value) { //MEU DEUS MEU SENHOR ME AJUDA POR FAVOR
-        if (value == -1) CC = -1;
-        else if (value == 1) CC = 1;
-        else CC = 0;
-    }
-
-    public void setSWAfterCompare(int compare) {
+    public void setSWAfterCompare(String compare) {
         CC = compare;
     }
 
@@ -158,7 +120,7 @@ public class Registers {
     public static final int rPC = 8;
     public static final int rSW = 9;
 
-    public int get(int idx) {
+    public String get(int idx) {
         switch (idx) {
             case rA: return getA();
             case rX: return getX();
@@ -166,33 +128,14 @@ public class Registers {
             case rB: return getB();
             case rS: return getS();
             case rT: return getT();
-            case rF: return (int)getF();    // TODO
+            case rF: return getF();    // TODO
             case rPC: return getPC();       // TODO
             case rSW: return getSW();       // TODO
-            //default: Logger.fmterr("Invalid register index '%d'", idx);
         }
-        return 0;
+        return "0";
     }
 
-    // get signed
-    /*public int gets(int idx) {
-        switch (idx) {
-            case rA: return getAs();
-            case rX: return getXs();
-            case rL: return getLs();
-            case rB: return getBs();
-            case rS: return getSs();
-            case rT: return getTs();
-            // undocumented
-            case rF: return (int)getF();    // TODO
-            case rPC: return getPC();       // TODO
-            case rSW: return getSW();       // TODO
-            default: Logger.fmterr("Invalid register index '%d'", idx);
-        }
-        return 0;
-    }*/
-
-    public void set(int idx, int value) {
+    public void set(int idx, String value) {
         switch (idx) {
             case rA: setA(value); break;
             case rX: setX(value); break;
@@ -203,18 +146,17 @@ public class Registers {
             case rF: setF(value); break;
             case rPC: setPC(value); break;
             case rSW: setSW(value); break;
-            //default: Logger.fmterr("Invalid register index '%d'", idx);
         }
     }
 
     // ************ other methods ????
 
     public void reset() {
-        PC = 0;
-        A = X = L = 0;
-        B = S = T = 0;
-        F = 0;
-        CC = 0;
+        PC = "0";
+        A = X = L = "0";
+        B = S = T = "0";
+        F = "0";
+        CC = "0";
     }
 
     public Registers() {

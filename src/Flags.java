@@ -2,10 +2,10 @@
 public class Flags {
 
     // ni flags
-    public static final int IMMEDIATE    = 01; //o operando vai ta escrito
-    public static final int INDIRECT     = 10; //passa um registrador e dentro dele vai ter o endereço de outro registrador
-    public static final int DIRECT       = 11; //instrução diz o registrador
-    public static final int SIC          = 00;
+    public static final String IMMEDIATE = "01"; //o operando vai ta escrito
+    public static final String INDIRECT     = "10"; //passa um registrador e dentro dele vai ter o endereço de outro registrador
+    public static final String DIRECT       = "11"; //instrução diz o registrador
+    public static final String SIC          = "00";
     // xbpe
     // x - x = 1 (endereçamento indexado)
     // b - b = 1 e p = 0 (enderaçmento de base e deslocamento)
@@ -13,13 +13,15 @@ public class Flags {
     // e - quantos bytes (e = 1 4 bytes, e = 0 3 bytes)
 
     // flags
-    private int ni;         // ...ni: only lower two bits are used
-    private int x;       // ...xbpe----: second four bits are used
-    private int b;
-    private int p;
-    private int e;
+    private String ni;         // ...ni: only lower two bits are used
+    private String x;       // ...xbpe----: second four bits are used
+    private String b;
+    private String p;
+    private String e;
 
-    public Flags(int ni, int x, int b, int p, int e) {
+    Conversion conversion = new Conversion();
+
+    public Flags(String ni, String x, String b, String p, String e) {
         this.ni = ni;
         this.x = x;
         this.b = b;
@@ -29,15 +31,15 @@ public class Flags {
 
     // ************ ni
 
-    public int get_ni() {
+    public String get_ni() {
         return ni;
     }
 
-    public void set_ni(int ni) {
+    public void set_ni(String ni) {
         this.ni = ni;
     }
 
-    public boolean is_ni(int what) {
+    public boolean is_ni(String what) {
         return ni == what;
     }
 
@@ -57,67 +59,63 @@ public class Flags {
         return is_ni(DIRECT);
     }
 
-    /*public byte combineWithOpcode(int opcode) {
-        return (byte)(opcode & 0xFC | ni & MASK_NI);
-    }*/
+    public String combineWithOpcode(String opcode) {
+        return (opcode + ni + x + b + p + e);
+    }
 
     // ************ xbpe
 
-    public int get_x() {
+    public String get_x() {
         return x;
     }
 
-    public int get_b() {
+    public String get_b() {
         return b;
     }
 
-    public int get_p() {
+    public String get_p() {
         return p;
     }
 
-    public int get_e() {
+    public String get_e() {
         return e;
     }
 
-    public void set_x(int x) {
+    public void set_x(String x) {
         this.x = x;
     }
-    public void set_b(int b) {
+    public void set_b(String b) {
         this.b = b;
     }
-    public void set_p(int p) {
+    public void set_p(String p) {
         this.p = p;
     }
-    public void set_e(int e) {
+    public void set_e(String e) {
         this.e = e;
     }
 
-    /*public int get_x() {
-        return (byte)(xbpe & 0x80);
-    }*/
-
     public boolean isIndexed() {
-        return x == 1;
+        return x == "1";
     }
 
     public void setIndexed() {
-        x = 1;
+        x = "1";
     }
 
     public boolean isBaseRelative() {
-        return b == 1;
+        return b == "1";
     }
 
     public void setBaseRelative() {
-        b = 1;
+        b = "1";
     }
 
     public boolean isPCRelative() {
-        return p == 1;
+        return p == "1";
     }
 
     public void setPCRelative() {
-        p = 1;
+        p = "1";
     }
 
     public boolean isRelative() {
@@ -125,24 +123,28 @@ public class Flags {
     }
 
     public boolean isAbsolute() {
-        return (x == 0 && b == 0 && p == 0 && e == 0);
+        return (x == "0" && b == "0" && p == "0" && e == "0");
     }
 
     public boolean isExtended() {
-        return e == 1;
+        return e == "1";
     }
 
     public void setExtended() {
-        e = 1;
+        e = "1";
     }
 
     // ************ operands
 
-    /*public int operandSic(int a, int b) {
+    /*public String operandSic(String a, String b) {
         // 15-bit address
-        return (a & 0x7F) << 8 | b & 0xFF;
+        int aInt;
+        aInt = conversion.stringBinaryToInt(a);
+        aInt = aInt << 8;
+        a = conversion.intToStringBinary(aInt);
+        return a | b;
     }
-    public int operandF3(int a, int b) {
+    /*public int operandF3(int a, int b) {
         // 12-bit address
         return (a & 0x0F) << 8 | b;
     }
