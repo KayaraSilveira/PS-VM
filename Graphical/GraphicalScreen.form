@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="MainFrame">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="1011" height="622"/>
+    </constraints>
+    <properties>
+      <background color="-1065498"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <component id="671e4" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Copperplate Gothic Light" size="16" style="0"/>
+          <foreground color="-12517345"/>
+          <text value="UNIVERSIDADE FEDERAL DE PELOTAS "/>
+        </properties>
+      </component>
+      <component id="e6a0a" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="3" column="0" row-span="2" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="4bc99" class="javax.swing.JButton" binding="btnRUN">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12517345"/>
+          <font name="Copperplate Gothic Light" size="24" style="0"/>
+          <foreground color="-524297"/>
+          <icon value="images/download (1) (1).jpg"/>
+          <text value="RUN"/>
+        </properties>
+      </component>
+      <component id="66786" class="javax.swing.JLabel" binding="VMtittle">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Copperplate Gothic Light" size="48" style="1"/>
+          <foreground color="-1082950"/>
+          <horizontalAlignment value="10"/>
+          <text value="VIRTUAL MACHINE SIC-HEX"/>
+          <verticalAlignment value="1"/>
+          <verticalTextPosition value="1"/>
+        </properties>
+      </component>
+      <component id="44e6e" class="javax.swing.JButton" binding="bntSTEP">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12517345"/>
+          <font name="Copperplate Gothic Light" size="24" style="0"/>
+          <foreground color="-524297"/>
+          <hideActionText value="false"/>
+          <icon value="images/download (1) (1).jpg"/>
+          <text value="STEP"/>
+        </properties>
+      </component>
+      <grid id="af88" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12517345"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <vspacer id="6ff62">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="4e4a5" class="javax.swing.JTextArea" binding="instructions">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="150" height="50"/>
+              </grid>
+            </constraints>
+            <properties>
+              <background color="-12517345"/>
+              <font name="Copperplate Gothic Light" size="28"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="614aa" binding="memory" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-12517345"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <vspacer id="13d34">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <vspacer id="a5688">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </vspacer>
+          <component id="9b091" class="javax.swing.JButton" binding="imgbackgroundmemory">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-12517345"/>
+              <foreground color="-12517345"/>
+              <hideActionText value="true"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <icon value="PS-VM/Graphical/images/(Weibo) Artist_Cre_ 是HOKI呀 (1).jpg"/>
+              <text value=""/>
+              <verticalAlignment value="0"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
