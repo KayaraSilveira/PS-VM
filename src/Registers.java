@@ -10,15 +10,14 @@ public class Registers {
     private String F;
     // condition code of status word register
     private String CC;
-
-    Conversion conversion = new Conversion();
+    
 
     // ***** getters/setters ********************
     // get   ... unsigned
     // get_s ... signed
 
-    public String getPC() {
-        return PC;
+    public int getPC() {
+        return Conversion.stringBinaryToInt(PC);
     }
 
     public void setPC(String val) {
@@ -27,86 +26,95 @@ public class Registers {
 
     public void incPC() {
         int pcInt;
-        pcInt = conversion.stringBinaryToInt(PC);
+        pcInt = Conversion.stringBinaryToInt(PC);
         if (++pcInt > 1023) {
             System.out.printf("PC overflow");
             pcInt = 0;
         }
-        PC = conversion.intToStringBinary(pcInt);
+        PC = Conversion.intToStringBinary(pcInt);
     }
 
-    public String getA() {
-        return A;
-    }
+    public int getA() {return Conversion.stringBinaryToInt(A);}
 
     public void setA(String val) {
         A = val;
     }
 
-    public String getX() {
-        return X;
+    public int getX() {
+        return Conversion.stringBinaryToInt(X);
     }
 
     public void setX(String val) {
         X = val;
     }
 
-    public String getL() {
-        return L;
+    public int getL() {
+        return Conversion.stringBinaryToInt(L);
     }
 
     public void setL(String val) {
         L = val;
     }
 
-    public String getS() {
-        return S;
+    public int getS() {
+        return Conversion.stringBinaryToInt(S);
     }
 
     public void setS(String val) {
         S = val;
     }
 
-    public String getT() {
-        return T;
+    public int getT() {
+        return Conversion.stringBinaryToInt(T);
     }
 
     public void setT(String val) {
         T = val;
     }
 
-    public String getB() {
-        return B;
+    public int getB() {
+        return Conversion.stringBinaryToInt(B);
     }
 
     public void setB(String val) {
         B = val;
     }
 
-    public String getF() {
-        return F;
+    public int getF() {
+        return Conversion.stringBinaryToInt(F);
     }
 
     public void setF(String val) {
         F = val;
     }
 
-    public String getSW() {
-        return CC;
+    public int getSW() {
+        return Conversion.stringBinaryToInt(CC);
     }
 
     public void setSW(String value) { //MEU DEUS MEU SENHOR ME AJUDA POR FAVOR
         int valueInt;
-        valueInt = conversion.stringBinaryToInt(value);
+        valueInt = Conversion.stringBinaryToInt(value);
 
         if (valueInt == -1) CC = "-1";
         else if (valueInt == 1) CC = "1";
         else CC = "0";
     }
+    /*public String isLower() {
+        return CC < 0;
+    }
+
+    public boolean isEqual() {
+        return CC == 0;
+    }
+
+    public boolean isGreater() {
+        return CC > 0;
+    }
 
     public void setSWAfterCompare(String compare) {
         CC = compare;
-    }
+    }*/
 
     // ***** getter/setter by register index ****
 
@@ -120,7 +128,7 @@ public class Registers {
     public static final int rPC = 8;
     public static final int rSW = 9;
 
-    public String get(int idx) {
+    public int get(int idx) {
         switch (idx) {
             case rA: return getA();
             case rX: return getX();
@@ -132,7 +140,7 @@ public class Registers {
             case rPC: return getPC();       // TODO
             case rSW: return getSW();       // TODO
         }
-        return "0";
+        return 0;
     }
 
     public void set(int idx, String value) {

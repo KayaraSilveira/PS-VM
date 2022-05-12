@@ -4,7 +4,6 @@ public class Memory{
 
     public final String[][] memoria;
 
-    Conversion conversion = new Conversion();
 
     public Memory(){
         this.memoria = new String[1024][8];
@@ -16,7 +15,7 @@ public class Memory{
 
     public boolean confereEndereco(String endereco){
         int enderecoInt;
-        enderecoInt = conversion.stringBinaryToInt(endereco);
+        enderecoInt = Conversion.stringBinaryToInt(endereco);
         boolean verifica = enderecoInt < 0 || enderecoInt >= 1024;
         if(verifica){
             System.out.println("Endereço de memória é inválido.");
@@ -24,27 +23,45 @@ public class Memory{
         return verifica;
     }
 
-    public String getByteRaw(String address) {
+    public String getByte(String address) {
         int addressInt, i;
         String byteReturn = "";
         confereEndereco(address);
-        addressInt = conversion.stringBinaryToInt(address);
+        addressInt = Conversion.stringBinaryToInt(address);
         for(i = 0; i < 8; i++) {
             byteReturn =  byteReturn + memoria[addressInt][i];
         }
         return byteReturn;
     }
 
-    public void setByteRaw(String address, String value) {
+    public void setByte(String address, String value) {
         if (confereEndereco(address)) {
             return;
         }
         int addressInt, i;
-        addressInt = conversion.stringBinaryToInt(address);
+        addressInt = Conversion.stringBinaryToInt(address);
         for(i = 0; i < 8; i++) {
             memoria[addressInt][i] =  value.substring(0 + i, 0 + i + 1);
         }
     }
+    public String getWord(String address) {
+        int addressInt, i,j;
+        String byteReturn = "";
+        addressInt = Conversion.stringBinaryToInt(address);
+        for (j=0; j<3; j++) {
+            for (i = 0; i < 8; i++) {
+                byteReturn = byteReturn + memoria[addressInt][i];
+            }
+        }
+        return byteReturn;
+    }
+
+    public void setWord(String address, String value){
+        setByte(address, Conversion.ShiftR(value, 16));
+        setByte(address + 8, Conversion.ShiftR(value, 8));
+        setByte(address + 16, value);
+    }
+
 
 
 }
