@@ -85,23 +85,20 @@ public class CPU {
         return true;
     }
 
-    public int fetch() {
-        int b = mem.getByte(reg.getPC());
+    public String fetch() {
+        String b = mem.getByte(Conversion.intToStringBinary(reg.getPC()));
         reg.incPC();
         return b;
     }
-    public void execute(){
+    /*public void execute(){
         instructionCount++;
-        // fetch first byte
-        int opcode = fetch();
-        // try format 1
-        if (execF1(opcode)) return;
-        // fetch one more byte
-        int op = fetch();
-        // try format 2
-        if (execF2(opcode, op)) return;
+        // Carrega 1 byte da memoria
+        String opcode = fetch();
+        String op = fetch();
+        // Formato 2
+        if (F2(opcode, op)) return;
         // otherwise it is format SIC, F3 or F4
-        Flags flags = new Flags(opcode, op);
+        Flags flags = new Flags(opcode.substring(opcode.length() - 2), op.substring(0,1), op.substring(1,2), op.substring(2,3), op.substring(3,4));
         // operand depends on instruction format
         int operand;
         // check if standard SIC
@@ -126,9 +123,9 @@ public class CPU {
             if (flags.isSimple()) operand += registers.getXs();
             else invalidAddressing();
         // try to execute
-        if (execSICF3F4(opcode & 0xFC, flags, operand)) return;
+        if (F3F4(opcode & 0xFC, flags, operand)) return;
         invalidOpcode(opcode);
-    }
+    }*/
 }
 
 
