@@ -9,7 +9,7 @@ public class Memory{
         this.memoria = new String[1024][8];
     }
 
-    public void reseta(){
+    public void reset(){
         Arrays.fill(memoria, "0");
     }
 
@@ -57,9 +57,10 @@ public class Memory{
     }
 
     public void setWord(String address, String value){
+
         setByte(address, Conversion.ShiftR(value, 16));
-        setByte(address + 8, Conversion.ShiftR(value, 8));
-        setByte(address + 16, value);
+        setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1), Conversion.ShiftR(value, 8));
+        setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+2), value);
     }
 
 
