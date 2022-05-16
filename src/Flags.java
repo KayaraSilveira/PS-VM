@@ -136,23 +136,25 @@ public class Flags {
 
     // ************ operands
 
-    /*public String operandSic(String a, String b) {
-        // 15-bit address
-        int aInt;
-        aInt = conversion.stringBinaryToInt(a);
-        aInt = aInt << 8;
-        a = conversion.intToStringBinary(aInt);
-        return a | b;
+    public String operandSic(String a, String b) {
+        a = Conversion.ShiftL(a,1);
+        a = a.substring(0, a.length()-1);
+
+        //retorna 15 bits
+        return a + b;
     }
-    /*public int operandF3(int a, int b) {
-        // 12-bit address
-        return (a & 0x0F) << 8 | b;
+    public String operandF3(String a, String b) {
+        a = a.substring(4,a.length());
+
+        return a + b;
     }
-    public int operandF4(int a, int b, int c) {
-        // 20-bit address
-        return (a & 0x0F) << 16 | b << 8 | c;
+    public String operandF4(String a, String b, String c) {
+
+        a = a.substring(4, a.length() );
+
+        return a + b + c;
     }
-    public int operandPCRelative(int op) {
+   /* public int operandPCRelative(int op) {
         // 12-bit signed integer
         return op >= 2048 ? op - 4096 : op;
     }
