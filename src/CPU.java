@@ -1,3 +1,5 @@
+import java.util.logging.Logger;
+
 public class CPU {
     public final Registers reg;
     private int instructionCount;
@@ -90,42 +92,43 @@ public class CPU {
         reg.incPC();
         return b;
     }
-    /*public void execute(){
+    private void notvalid() {
+        System.out.println("Invalid addressing.");
+    }
+    public void execute(){
         instructionCount++;
         // Carrega 1 byte da memoria
         String opcode = fetch();
         String op = fetch();
         // Formato 2
         if (F2(opcode, op)) return;
-        // otherwise it is format SIC, F3 or F4
+        // SIC, F3,  F4
         Flags flags = new Flags(opcode.substring(opcode.length() - 2), op.substring(0,1), op.substring(1,2), op.substring(2,3), op.substring(3,4));
-        // operand depends on instruction format
-        int operand;
-        // check if standard SIC
+        String operand;
         if (flags.isSic()) {
             operand = flags.operandSic(op, fetch());
-            // check if F4 (extended)
+            // Verifica F4
         } else if (flags.isExtended()) {
             operand = flags.operandF4(op, fetch(), fetch());
-            if (flags.isRelative()) invalidAddressing();
-            // otherwise it is F3
+            if (flags.isRelative()) notvalid();
         } else {
             operand = flags.operandF3(op, fetch());
-            if (flags.isPCRelative())
-                operand = flags.operandPCRelative(operand) + registers.getPC();
-            else if (flags.isBaseRelative())
-                operand += registers.getB();
+            /*if (flags.isPCRelative())
+                operand = Conversion.intToStringBinary(flags.operandPCRelative(Conversion.stringBinaryToInt(operand)) + reg.getPC());
+            */
+            if (flags.isBaseRelative())
+                operand += reg.getB();
             else if (!flags.isAbsolute())
-                invalidAddressing();  // both PC and base at the same time
+                notvalid();  // both PC and base at the same time
         }
         // SIC, F3, F4 -- all support indexed addressing, but only when simple TA calculation used
         if (flags.isIndexed())
-            if (flags.isSimple()) operand += registers.getXs();
-            else invalidAddressing();
+            if (flags.isDirect()) operand += reg.getX();
+            else notvalid();
         // try to execute
-        if (F3F4(opcode & 0xFC, flags, operand)) return;
-        invalidOpcode(opcode);
-    }*/
+        if (F3F4(opcode, flags, operand)) return;
+        System.out.println("Opcode invalido " + opcode);
+    }
 }
 
 
