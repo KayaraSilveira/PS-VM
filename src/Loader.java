@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 
 public class Loader {
     public static String readString(Reader r, int len) throws IOException {
@@ -14,39 +11,72 @@ public class Loader {
         return Conversion.stringBinaryToInt(readString(r, 8));
     }
 
-    public static int readWord(Reader r) throws IOException {
-        return Conversion.stringBinaryToInt(readString(r, 24));
+    public static String readWord(Reader r) throws IOException {
+        return readString(r, 24);
     }
 
     public static boolean load(CPU cpu, String filename) throws  FileNotFoundException {
-        Reader r = new FileReader(filename);
+        BufferedReader r = new BufferedReader (new FileReader(filename));
 
         try {
-            // check if it is a header record
-            readString(r, 6);	// ignore name
-            if (r.read() != 'H') return false;
-            int start = readByte(r);
-            int length = readByte(r);
-            if (r.read() == '\r') // eol
-                r.read();
 
             Memory mem = cpu.mem;
-            Registers reg = cpu.reg;
+            //Registers reg = cpu.reg;
+            String line = r.readLine();
+            int memoryLine = 0;
+            while(line != null) {
+                mem.setWord(Conversion.intToStringBinary(memoryLine), line);
+                line = r.readLine();
+                memoryLine += 3;
+                mem.incInstructionCount();
+            }
+            r.close();
 
-            // if it is text records
-            int ch = r.read();
-            while (ch == 'T') {
-                int loc = readWord(r);
-                int len = readByte(r);
-                while (len-- > 0) {
-                    if (loc < start || loc >= start + length) return false;
-                    String val = Conversion.intToStringBinary(readByte(r));
-                    mem.setByte(Conversion.intToStringBinary(loc++), val);
+            /*if (r.read() == '\r') // eol
+                r.read();
+
+            while (line.contains("0")) {
+                line = readWord(r);
+                if (line.contains("0")) {
                 }
                 if (r.read() == '\r') // eol
                     r.read();
-                ch = r.read();
+            }*/
+
+
+
+
+            //mem.setByte(Conversion.intToStringBinary(reg.getPC()), line);
+
+            //String line2 = readWord(r);
+
+            //System.out.println(line2);
+
+            //mem.setByte(Conversion.intToStringBinary(reg.getPC()), line2);
+            //reg.incPC();
+
+            //String line3 = readWord(r);
+
+            //System.out.println(line3);
+
+            //mem.setByte(Conversion.intToStringBinary(reg.getPC()), line3);
+            //reg.incPC();
+
+            //System.out.println(reg.getA());
+
+
+
+
+            //int len = readByte(r);
+            /*while (len-- > 0) {
+                if (loc < start || loc >= start + length) return false;
+                String val = Conversion.intToStringBinary(readByte(r));
+                mem.setByte(Conversion.intToStringBinary(loc++), val);
             }
+            if (r.read() == '\r') // eol
+                r.read();
+            ch = r.read();
+
 
             // modification records
             while (ch == 'M') {
@@ -61,7 +91,7 @@ public class Loader {
             if (ch != 'E') return false;
             reg.setPC(Conversion.intToStringBinary(readWord(r)));
 
-            System.out.println("Finished loading!");
+            System.out.println("Finished loading!");*/
         } catch (IOException e) {
             System.out.println(e);
             return false;
