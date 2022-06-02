@@ -6,7 +6,7 @@ public class Main {
         CPU cpu = new CPU();
 
         try {
-            Loader.load(cpu, "src/test.obj");
+            Loader.load(cpu, "PS-VM/src/test.obj");
         } catch (FileNotFoundException e1) {
             System.out.println(e1);
             return;
@@ -28,5 +28,7 @@ public class Main {
             System.out.println("\n");
             i++;
         }
+
+        System.out.println(cpu.mem.getByte("111"));
     }
 }

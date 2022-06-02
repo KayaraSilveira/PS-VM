@@ -97,7 +97,7 @@ public class CPU {
         String op = fetch();
         // Formato 2
         if (F2(opcode, op)) return;
-        // SIC, F3,  F4
+        // SIC, F3, F4
 
         Flags flags = new Flags(opcode.substring(opcode.length() - 2), op.substring(0,1), op.substring(1,2), op.substring(2,3), op.substring(3,4));
 
