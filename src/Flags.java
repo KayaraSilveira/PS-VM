@@ -2,7 +2,7 @@
 public class Flags {
 
     // ni flags
-    public static final String IMMEDIATE = "01"; //o operando vai ta escrito
+    public static final String IMMEDIATE    = "01"; //o operando vai ta escrito
     public static final String INDIRECT     = "10"; //passa um registrador e dentro dele vai ter o endereço de outro registrador
     public static final String DIRECT       = "11"; //instrução diz o registrador
     public static final String SIC          = "00";
@@ -19,8 +19,6 @@ public class Flags {
     private String p;
     private String e;
 
-    Conversion conversion = new Conversion();
-
     public Flags(String ni, String x, String b, String p, String e) {
         this.ni = ni;
         this.x = x;
@@ -31,32 +29,32 @@ public class Flags {
 
     // ************ ni
 
-    public String get_ni() {
+    public String getNi() {
         return ni;
     }
 
-    public void set_ni(String ni) {
+    public void setNi(String ni) {
         this.ni = ni;
     }
 
-    public boolean is_ni(String what) {
-        return ni == what;
+    public boolean isNi(String what) {
+        return getNi().equals(what);
     }
 
     public boolean isSic() {
-        return is_ni(SIC);
+        return isNi(SIC);
     }
 
     public boolean isImmediate() {
-        return is_ni(IMMEDIATE);
+        return isNi(IMMEDIATE);
     }
 
     public boolean isIndirect() {
-        return is_ni(INDIRECT);
+        return isNi(INDIRECT);
     }
 
     public boolean isDirect() {
-        return is_ni(DIRECT);
+        return isNi(DIRECT);
     }
 
     public String combineWithOpcode(String opcode) {
@@ -65,37 +63,37 @@ public class Flags {
 
     // ************ xbpe
 
-    public String get_x() {
+    public String getX() {
         return x;
     }
 
-    public String get_b() {
+    public String getB() {
         return b;
     }
 
-    public String get_p() {
+    public String getP() {
         return p;
     }
 
-    public String get_e() {
+    public String getE() {
         return e;
     }
 
-    public void set_x(String x) {
+    public void setX(String x) {
         this.x = x;
     }
-    public void set_b(String b) {
+    public void setB(String b) {
         this.b = b;
     }
-    public void set_p(String p) {
+    public void setP(String p) {
         this.p = p;
     }
-    public void set_e(String e) {
+    public void setE(String e) {
         this.e = e;
     }
 
     public boolean isIndexed() {
-        return x == "1";
+        return x.equals("1");
     }
 
     public void setIndexed() {
@@ -103,7 +101,7 @@ public class Flags {
     }
 
     public boolean isBaseRelative() {
-        return b == "1";
+        return b.equals("1");
     }
 
     public void setBaseRelative() {
@@ -111,7 +109,7 @@ public class Flags {
     }
 
     public boolean isPCRelative() {
-        return p == "1";
+        return p.equals("1");
     }
 
     public void setPCRelative() {
@@ -123,11 +121,11 @@ public class Flags {
     }
 
     public boolean isAbsolute() {
-        return (x == "0" && b == "0" && p == "0" && e == "0");
+        return (x.equals("0") && b.equals("0") && p.equals("0") && e.equals("0"));
     }
 
     public boolean isExtended() {
-        return e == "1";
+        return e.equals("1");
     }
 
     public void setExtended() {
@@ -137,8 +135,7 @@ public class Flags {
     // ************ operands
 
     public String operandSic(String a, String b) {
-        a = Conversion.ShiftL(a,1);
-        a = a.substring(0, a.length()-1);
+        a = a.substring(1, a.length());
 
         //retorna 15 bits
         return a + b;
