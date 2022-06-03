@@ -43,6 +43,7 @@ public class Memory{
     }
 
     public void setByte(String address, String value) {
+        //System.out.println("setByte Address: "+address);
         if (checkAddress(address)) {
             System.out.println("endereço inválido!");
             return;
@@ -73,19 +74,21 @@ public class Memory{
         //System.out.println("address " + address);
         //System.out.println("value " + value);
         //System.out.println("tamanho " + value.length());
-
+        if (value.length() == 16) {
+            setByte(address, value.substring(0, 8));
+            setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1), value.substring(8, 16));
+            return;
+        }
         value = Conversion.padLeftZeros(value, 24);
         //System.out.println("tamanho value "+value);
         if (value.length() == 24) {
-            System.out.println("entrou");
+            //System.out.println("Adsress: "+ address);
+            //System.out.println("Value: "+ value);
             setByte(address, value.substring(0, 8));
             setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1), value.substring(8, 16));
             setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+2), value.substring(16, 24));
         }
 
-        if (value.length() == 16) {
-            setByte(address, value.substring(0, 8));
-            setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1), value.substring(8, 16));
-        }
+
     }
 }

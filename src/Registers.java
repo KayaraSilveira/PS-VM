@@ -37,16 +37,26 @@ public class Registers {
 
     public int getA() {return Conversion.stringBinaryToInt(A);}
 
-    public String setVal(int val){
-            if(getPC() > val){// return val
+    public String setVal(int val, Flags flags) {
+        if (getPC() >= val) {// return val
+            return Conversion.intToStringBinary(val);
+        } else if (flags.isImmediate()){
+            return Conversion.intToStringBinary(val);
+        } else if (mem.getWord(Conversion.intToStringBinary(val)).contains("null")) {
+            return Conversion.intToStringBinary(val);
+        }
+        String operand;
+        operand = mem.getWord(Conversion.intToStringBinary(val));
 
-               return Conversion.intToStringBinary(val);
-           } else if (mem.getWord(Conversion.intToStringBinary(val)).contains("null")) {
+        if (flags.isIndirect()) operand = mem.getWord(operand);
+
+        return operand;
+            /*else if (mem.getWord(Conversion.intToStringBinary(val)).contains("null")) {
 
                 return Conversion.intToStringBinary(val);
            }else{
                 return mem.getWord(Conversion.intToStringBinary(val));
-           }
+           }*/
     }
     public void setA(String val) {
          A = val;

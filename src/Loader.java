@@ -25,10 +25,19 @@ public class Loader {
             String line = r.readLine();
             int memoryLine = 0;
             while(line != null) {
-                mem.setWord(Conversion.intToStringBinary(memoryLine), line);
-                line = r.readLine();
-                memoryLine += 3;
-                mem.incInstructionCount();
+                if(line.length() == 16){
+                    mem.setByte(Conversion.intToStringBinary(memoryLine), line.substring(0,8));
+                    memoryLine += 1;
+                    mem.setByte(Conversion.intToStringBinary(memoryLine), line.substring(8,16));
+                    line = r.readLine();
+                    memoryLine += 1;
+                    mem.incInstructionCount();
+                }else {
+                    mem.setWord(Conversion.intToStringBinary(memoryLine), line);
+                    line = r.readLine();
+                    memoryLine += 3;
+                    mem.incInstructionCount();
+                }
             }
             r.close();
 
