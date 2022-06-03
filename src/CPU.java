@@ -2,10 +2,11 @@ public class CPU {
     public final Registers reg;
     public final Memory mem;
     public CPU() {
-        this.reg = new Registers();
         this.mem = new Memory();
+        this.reg = new Registers(this.mem);
     }
     private boolean F2(String opcode, String operand) {
+
         // Formato 2: Op op1, op2
         int op1 = Conversion.stringBinaryToInt(operand.substring(0, operand.length()/2));
         int op2 = Conversion.stringBinaryToInt(operand.substring(operand.length()/2));
@@ -30,7 +31,11 @@ public class CPU {
         return true;
     }
     private String storeAddr(Flags flags, String addr) {
-        return flags.isIndirect() ? mem.getWord(addr) : addr;
+         if(flags.isIndirect()){
+            return mem.getWord(addr);
+        }else{
+            return addr;
+        }
     }
     private String loadWord(Flags flags, String operand) {
         if (flags.isImmediate()) return operand;
@@ -44,7 +49,7 @@ public class CPU {
         switch (opcode.substring(0, opcode.length() - 2)) {
             // ***** immediate addressing not possible *****
             // stores
-            case Opcode.STA:	mem.setWord(storeAddr(flags, operand), Conversion.intToStringBinary(reg.getA())); break;
+            case Opcode.STA:    mem.setWord(storeAddr(flags, operand), Conversion.intToStringBinary(reg.getA())); break;
             case Opcode.STX:	mem.setWord(storeAddr(flags, operand), Conversion.intToStringBinary(reg.getX())); break;
             case Opcode.STL:	mem.setWord(storeAddr(flags, operand), Conversion.intToStringBinary(reg.getL())); break;
             case Opcode.STCH:	mem.setByte(storeAddr(flags, operand), Conversion.intToStringBinary(reg.getA())); break;
@@ -60,20 +65,20 @@ public class CPU {
             case Opcode.JSUB:	reg.setL(Conversion.intToStringBinary(reg.getPC())); reg.setPC(storeAddr(flags, operand)); break;
             // ***** immediate addressing possible *****
             // loads
-            case Opcode.LDA:	reg.setA(operand); break;
-            case Opcode.LDX:	reg.setX(operand); break;
-            case Opcode.LDL:	reg.setL(operand); break;
+            case Opcode.LDA:    reg.setA(reg.setVal(Conversion.stringBinaryToInt(operand))); break;
+            case Opcode.LDX:	reg.setX(reg.setVal(Conversion.stringBinaryToInt(operand))); break;
+            case Opcode.LDL:	reg.setL(reg.setVal(Conversion.stringBinaryToInt(operand))); break;
             //case Opcode.LDCH:	reg.setALo(loadByte(flags, operand)); break;
-            case Opcode.LDB: reg.setB(operand); break;
-            case Opcode.LDS: reg.setS(operand); break;
-            case Opcode.LDT:	reg.setT(operand); break;
+            case Opcode.LDB:    reg.setB(reg.setVal(Conversion.stringBinaryToInt(operand))); break;
+            case Opcode.LDS:    reg.setS(reg.setVal(Conversion.stringBinaryToInt(operand))); break;
+            case Opcode.LDT:	reg.setT(reg.setVal(Conversion.stringBinaryToInt(operand))); break;
             // arithmetic
-            case Opcode.ADD:    reg.setA(Conversion.intToStringBinary(reg.getA() + Conversion.stringBinaryToInt(operand))); break;
-            case Opcode.SUB:    reg.setA(Conversion.intToStringBinary(reg.getA() - Conversion.stringBinaryToInt(operand))); break;
-            case Opcode.MUL:	reg.setA(Conversion.intToStringBinary(reg.getA() * Conversion.stringBinaryToInt(operand))); break;
-            case Opcode.DIV:	reg.setA(Conversion.intToStringBinary(reg.getA() / Conversion.stringBinaryToInt(operand))); break;
-            case Opcode.AND:	reg.setA(Conversion.intToStringBinary(reg.getA() & Conversion.stringBinaryToInt(operand))); break;
-            case Opcode.OR:		reg.setA(Conversion.intToStringBinary(reg.getA() | Conversion.stringBinaryToInt(operand))); break;
+            case Opcode.ADD:    reg.setA(Conversion.intToStringBinary (reg.getA()  + Conversion.stringBinaryToInt(reg.setVal(Conversion.stringBinaryToInt(operand))))); break;
+            case Opcode.SUB:    reg.setA(Conversion.intToStringBinary(reg.getA() - Conversion.stringBinaryToInt(reg.setVal(Conversion.stringBinaryToInt(operand))))); break;
+            case Opcode.MUL:	reg.setA(Conversion.intToStringBinary(reg.getA() * Conversion.stringBinaryToInt(reg.setVal(Conversion.stringBinaryToInt(operand))))); break;
+            case Opcode.DIV:	reg.setA(Conversion.intToStringBinary(reg.getA() / Conversion.stringBinaryToInt(reg.setVal(Conversion.stringBinaryToInt(operand))))); break;
+            case Opcode.AND:	reg.setA(Conversion.intToStringBinary(reg.getA() & Conversion.stringBinaryToInt(reg.setVal(Conversion.stringBinaryToInt(operand))))); break;
+            case Opcode.OR:		reg.setA(Conversion.intToStringBinary(reg.getA() | Conversion.stringBinaryToInt(reg.setVal(Conversion.stringBinaryToInt(operand))))); break;
             case Opcode.COMP:	reg.setSWAfterCompare(Conversion.intToStringBinary(reg.getA() - Conversion.stringBinaryToInt(loadWord(flags, operand)))); break;
             case Opcode.TIX:	reg.setX(Conversion.intToStringBinary(reg.getX() + 1));
                 reg.setSWAfterCompare(Conversion.intToStringBinary(reg.getX() - Conversion.stringBinaryToInt(loadWord(flags, operand)))); break;
@@ -116,10 +121,12 @@ public class CPU {
             /*if (flags.isPCRelative())
                 operand = Conversion.intToStringBinary(flags.operandPCRelative(Conversion.stringBinaryToInt(operand)) + reg.getPC());
             */
-            if (flags.isBaseRelative())
-                operand += reg.getB();
-            else if (!flags.isAbsolute())
-                notvalid();  // both PC and base at the same time
+            if (flags.isBaseRelative()){
+                int a;
+                a = Conversion.stringBinaryToInt(operand);
+                a += reg.getB();
+                operand = Conversion.intToStringBinary(a);
+            } else if (!flags.isAbsolute()) notvalid();  // both PC and base at the same time
         }
         // SIC, F3, F4 -- all support indexed addressing, but only when simple TA calculation used
         if (flags.isIndexed())

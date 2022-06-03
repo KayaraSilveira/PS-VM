@@ -8,7 +8,18 @@ public class Conversion {
         number = Integer.parseInt(text, 2);
         return number;
     }
+    public static String padLeftZeros(String inputString, int length) {
+        if (inputString.length() >= length) {
+            return inputString;
+        }
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < length - inputString.length()) {
+            sb.append('0');
+        }
+        sb.append(inputString);
 
+        return sb.toString();
+    }
     public static String intToStringBinary (int number) {
         String text;
         text = Integer.toBinaryString(number);

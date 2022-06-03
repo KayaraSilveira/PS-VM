@@ -57,32 +57,27 @@ public class Memory{
         }
     }
     public String getWord(String address) {
-        int addressInt, i,j;
+        int  addressInt,i,j;
         String byteReturn = "";
         addressInt = Conversion.stringBinaryToInt(address);
         for (j = 0; j < 3; j++) {
             for (i = 0; i < 8; i++) {
-                byteReturn = byteReturn + memory[addressInt][i];
+                byteReturn = byteReturn + memory[addressInt + j][i];
             }
         }
         return byteReturn;
     }
 
     public void setWord(String address, String value) {
-        /*
-        System.out.println(value);
-        System.out.println(address);
-        System.out.println(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1));
-        System.out.println(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+2));
-        System.out.println(value.substring(0, 8));
-        System.out.println(value.substring(8, 16));
-        System.out.println(value.substring(16, 24));*/
 
-        //System.out.println(address);
-        //System.out.println(value);
-        //System.out.println(value.length());
+        //System.out.println("address " + address);
+        //System.out.println("value " + value);
+        //System.out.println("tamanho " + value.length());
 
+        value = Conversion.padLeftZeros(value, 24);
+        //System.out.println("tamanho value "+value);
         if (value.length() == 24) {
+            System.out.println("entrou");
             setByte(address, value.substring(0, 8));
             setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1), value.substring(8, 16));
             setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+2), value.substring(16, 24));

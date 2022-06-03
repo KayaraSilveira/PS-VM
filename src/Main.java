@@ -15,7 +15,7 @@ public class Main {
 
         while (i < cpu.mem.getInstructionCount()) {
             cpu.execute();
-
+            System.out.println("posicao 27 = 30 " + cpu.mem.getWord("11011"));
             System.out.println("REGISTER A: " + cpu.reg.getA());
             System.out.println("REGISTER X: " + cpu.reg.getX());
             System.out.println("REGISTER L: " + cpu.reg.getL());
