@@ -9,7 +9,7 @@ public class Flags {
     public static final String SIC          = "00";
     // xbpe
     // x - x = 1 (endereçamento indexado)
-    // b - b = 1 e p = 0 (enderaçmento de base e deslocamento)
+    // b - b = 1 e p = 0 (enderaçamento de base e deslocamento)
     // p - b = 0 e p = 1 (enderaçmento relativo do pc)
     // e - quantos bytes (e = 1 4 bytes, e = 0 3 bytes)
 

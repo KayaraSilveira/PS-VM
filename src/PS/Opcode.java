@@ -1,5 +1,3 @@
-package PS;
-
 public class Opcode {
     // Formato 2 SIC/XE
     public static final String ADDR = "10010000";
