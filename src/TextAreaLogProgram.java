@@ -1,4 +1,4 @@
-package PS;
+import PS.Loader;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

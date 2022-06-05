@@ -1,4 +1,3 @@
-import java.util.logging.Logger;
 
 public class CPU {
     public final Registers reg;

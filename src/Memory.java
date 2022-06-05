@@ -1,5 +1,3 @@
-package PS;
-
 import java.util.Arrays;
 
 public class Memory{
