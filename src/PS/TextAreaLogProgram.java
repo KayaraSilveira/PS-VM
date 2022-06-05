@@ -21,8 +21,9 @@ public class TextAreaLogProgram  extends JFrame {
     private JButton clearButton;
     private JScrollPane scrollMemory;
     private JTextArea textArea1;         //IMPRIME REGISTRADORES
+    private JScrollBar scrollBar1;
 
-   // private ArrayList<Registers> regs;
+    // private ArrayList<Registers> regs;
     CPU cpu = new CPU();
 
 
@@ -33,7 +34,7 @@ public class TextAreaLogProgram  extends JFrame {
        //WINDOW
        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        this.setContentPane(this.panelMain);
-       this.setSize(650, 600);
+       this.setSize(650, 750);
        setLocationRelativeTo(null);    // centers on screen
        this.pack();
 
