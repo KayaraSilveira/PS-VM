@@ -1,5 +1,3 @@
-package PS;
-
 public class Flags {
 
     // ni flags

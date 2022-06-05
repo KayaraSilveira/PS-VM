@@ -1,5 +1,3 @@
-package PS;
-
 public class Registers {
     public final Memory mem;
 
