@@ -1,3 +1,5 @@
+package PS;
+
 public class Registers {
 
     // SIC commands counter
