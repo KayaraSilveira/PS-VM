@@ -1,9 +1,11 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         CPU cpu = new CPU();
+        Macro ob = new Macro();
 
         try {
             Loader.load(cpu, "PS-VM/src/test.obj");
@@ -11,6 +13,7 @@ public class Main {
             System.out.println(e1);
             return;
         }
+
         int i = 0;
 
         while (i < cpu.mem.getInstructionCount()) {
@@ -30,5 +33,24 @@ public class Main {
         }
 
         System.out.println(cpu.mem.getByte("111"));
+
+        try {
+            ob.loadMacro("PS-VM/src/macro.txt");
+        } catch (
+                FileNotFoundException e1) {
+            System.out.println(e1);
+            return;
+        }
+
+        //MACRO THINGS
+        ob.namesTable(ob.macro);
+        ob.callMacros(ob.macro);
+        ob.definitionTable(ob.macro);
+        ob.expandCallMacro();
+        ob.substituiParam();
+        ob.removeNameMacro();
+        ob.expandMacros();
+        ob.removeCallMacro();
+        ob.writeMacro();
     }
 }
