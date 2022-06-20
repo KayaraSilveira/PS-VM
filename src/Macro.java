@@ -70,7 +70,7 @@ public class Macro {
     }
 
     public void writeMacro() throws IOException {
-        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("PS-VM/src/saida.txt"));
+        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/saida.txt"));
         for(int i=0; i<finalMacro.size();i++)
             buffWrite.append(getFinalMacro(i) + "\n");
 

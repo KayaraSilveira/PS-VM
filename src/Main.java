@@ -8,7 +8,7 @@ public class Main {
         Macro ob = new Macro();
 
         try {
-            Loader.load(cpu, "PS-VM/src/test.obj");
+            Loader.load(cpu, "src/test.obj");
         } catch (FileNotFoundException e1) {
             System.out.println(e1);
             return;
@@ -35,7 +35,7 @@ public class Main {
         System.out.println(cpu.mem.getByte("111"));
 
         try {
-            ob.loadMacro("PS-VM/src/macro.txt");
+            ob.loadMacro("src/macro.txt");
         } catch (
                 FileNotFoundException e1) {
             System.out.println(e1);
@@ -52,5 +52,7 @@ public class Main {
         ob.expandMacros();
         ob.removeCallMacro();
         ob.writeMacro();
+
+
     }
 }
