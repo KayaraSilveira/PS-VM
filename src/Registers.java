@@ -1,4 +1,5 @@
 public class Registers {
+    public final Memory mem;
 
     // SIC commands counter
     private String PC;
@@ -10,7 +11,7 @@ public class Registers {
     private String F;
     // condition code of status word register
     private String CC;
-    
+
 
     // ***** getters/setters ********************
     // get   ... unsigned
@@ -36,6 +37,27 @@ public class Registers {
 
     public int getA() {return Conversion.stringBinaryToInt(A);}
 
+    public String setVal(int val, Flags flags) {
+        if (getPC() >= val) {// return val
+            return Conversion.intToStringBinary(val);
+        } else if (flags.isImmediate()){
+            return Conversion.intToStringBinary(val);
+        } else if (mem.getWord(Conversion.intToStringBinary(val)).contains("null")) {
+            return Conversion.intToStringBinary(val);
+        }
+        String operand;
+        operand = mem.getWord(Conversion.intToStringBinary(val));
+
+        if (flags.isIndirect()) operand = mem.getWord(operand);
+
+        return operand;
+            /*else if (mem.getWord(Conversion.intToStringBinary(val)).contains("null")) {
+
+                return Conversion.intToStringBinary(val);
+           }else{
+                return mem.getWord(Conversion.intToStringBinary(val));
+           }*/
+    }
     public void setA(String val) {
         A = val;
     }
@@ -166,8 +188,8 @@ public class Registers {
         F = "0";
         CC = "0";
     }
-
-    public Registers() {
+    public Registers(Memory mem) {
+        this.mem = mem;
         reset();
     }
 

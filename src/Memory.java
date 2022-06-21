@@ -51,9 +51,8 @@ public class Memory{
         addressInt = Conversion.stringBinaryToInt(address);
         //System.out.println(addressInt);
         //System.out.println(value);
-
         for(i = 0; i < 8; i++) {
-            memory[addressInt][i] =  value.substring(0 + i, 0 + i + 1);
+            memory[addressInt][i] =  value.substring(i, i + 1);
         }
     }
     public String getWord(String address) {
@@ -93,4 +92,5 @@ public class Memory{
             setByte(Conversion.intToStringBinary(Conversion.stringBinaryToInt(address)+1), value.substring(8, 16));
         }
     }
+
 }

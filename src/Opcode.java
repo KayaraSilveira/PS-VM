@@ -1,5 +1,9 @@
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Opcode {
     // Formato 2 SIC/XE
+    public ArrayList<String> op = new ArrayList<>();
     public static final String ADDR = "10010000";
     public static final String SUBR = "10010100";
     public static final String MULR = "10011000";
@@ -45,4 +49,78 @@ public class Opcode {
     public static final String OR = "100010";
     public static final String COMP = "101000";
     public static final String TIX = "101100";
+
+
+    public Opcode() {
+        op.add("ADDR");
+        op.add("SUBR");
+        op.add("MULR");
+        op.add("DIVR");
+        op.add("COMPR");
+        op.add("SHIFTL");
+        op.add("SHIFTR");
+        op.add("RMO");
+        op.add("CLEAR");
+        op.add("TIXR");
+        op.add("STA");
+        op.add("STX");
+        op.add("STL");
+        op.add("STCH");
+        op.add("STB");
+        op.add("STS");
+        op.add("STT");
+        op.add("JEQ");
+        op.add("JGT");
+        op.add("JLT");
+        op.add("J");
+        op.add("RSUB");
+        op.add("JSUB");
+        op.add("LDA");
+        op.add("LDX");
+        op.add("LDL");
+        op.add("LDCH");
+        op.add("LDB");
+        op.add("LDS");
+        op.add("LDT");
+        op.add("ADD");
+        op.add("SUB");
+        op.add("MUL");
+        op.add("DIV");
+        op.add("AND");
+        op.add("OR");
+        op.add("COMP");
+        op.add("TIX");
+        op.add("+STA");
+        op.add("+STX");
+        op.add("+STL");
+        op.add("+STCH");
+        op.add("+STB");
+        op.add("+STS");
+        op.add("+STT");
+        op.add("+JEQ");
+        op.add("+JGT");
+        op.add("+JLT");
+        op.add("+J");
+        op.add("+RSUB");
+        op.add("+JSUB");
+        op.add("+LDA");
+        op.add("+LDX");
+        op.add("+LDL");
+        op.add("+LDCH");
+        op.add("+LDB");
+        op.add("+LDS");
+        op.add("+LDT");
+        op.add("+ADD");
+        op.add("+SUB");
+        op.add("+MUL");
+        op.add("+DIV");
+        op.add("+AND");
+        op.add("+OR");
+        op.add("+COMP");
+        op.add("+TIX");
+    }
+
+    public String getOp(int position) {
+        return op.get(position);
+    }
 }

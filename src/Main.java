@@ -4,11 +4,45 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        CPU cpu = new CPU();
         Macro ob = new Macro();
+        Montador mon = new Montador();
 
         try {
-            Loader.load(cpu, "src/test.obj");
+            ob.loadMacro("src/macro.txt");
+        } catch (
+                FileNotFoundException e1) {
+            System.out.println(e1);
+            return;
+        }
+
+        //MACRO THINGS
+        ob.namesTable(ob.macro);
+        ob.callMacros(ob.macro);
+        ob.definitionTable(ob.macro);
+        ob.expandCallMacro();
+        ob.substituiParam();
+        ob.removeNameMacro();
+        ob.expandMacros();
+        ob.removeCallMacro();
+        ob.writeMacro();
+
+        try {
+            mon.loadMontador("src/inputMontador.txt");
+        } catch (
+                FileNotFoundException e1) {
+            System.out.println(e1);
+            return;
+        }
+
+        mon.verifyLabel();
+        mon.opToBinary();
+        mon.writeMontador();
+        mon.writeSymbolTable();
+
+        CPU cpu = new CPU();
+
+        try {
+            Loader.load(cpu, "src/saidaMontador.txt");
         } catch (FileNotFoundException e1) {
             System.out.println(e1);
             return;
@@ -31,28 +65,7 @@ public class Main {
             System.out.println("\n");
             i++;
         }
-
-        System.out.println(cpu.mem.getByte("111"));
-
-        try {
-            ob.loadMacro("src/macro.txt");
-        } catch (
-                FileNotFoundException e1) {
-            System.out.println(e1);
-            return;
-        }
-
-
-        //MACRO THINGS
-        ob.namesTable(ob.macro);
-        ob.callMacros(ob.macro);
-        ob.definitionTable(ob.macro);
-        ob.expandCallMacro();
-        ob.substituiParam();
-        ob.removeNameMacro();
-        ob.expandMacros();
-        ob.removeCallMacro();
-        ob.writeMacro();
+        cpu.imprimeMem();
 
 
     }
