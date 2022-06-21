@@ -22,6 +22,7 @@ EXTRAVALUE WORD 50
 ------- CPU -------
 Está pegando um valor aleatório quando pede para carregar o conteudo da posição de
 memória 512 (que é 101 - 5 em binario) para o registrador A
+os STORE também não estão funcionando (STA, STL) a posição onde eles mandam armazenar fica Nula
 
 ----- Carregador -----
 Falta tratar os casos do Word que ocupam mais de 1 bye

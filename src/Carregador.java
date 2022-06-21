@@ -61,8 +61,15 @@ public class Carregador {
                     if(((sizeAux % 8) != 0) || (size == 0)) {
                         size++;
                     }
-                    binary = Conversion.padLeftZeros(binary, 8);
-                    mem.setByte(Conversion.intToStringBinary(positionA), binary);
+                    binary = Conversion.padLeftZeros(binary, size * 8);
+                    int positionAux = positionA;
+                    int count = 0;
+                    for(int j = 0; j < size; j++) {
+                        mem.setByte(Conversion.intToStringBinary(positionAux), binary.substring(count, 8 + count));
+                        count += 8;
+                        positionAux++;
+                    }
+                    //mem.setByte(Conversion.intToStringBinary(positionA), binary);
                     positionA += size;
                 } else if(line[1].equals("RESB")) {
                     positionA += Integer.parseInt(line[2]);
