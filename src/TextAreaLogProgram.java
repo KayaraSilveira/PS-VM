@@ -1,5 +1,3 @@
-import PS.Loader;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +40,7 @@ public class TextAreaLogProgram  extends JFrame {
            @Override
            public void actionPerformed(ActionEvent e) {
                try {
-                   Loader.load(cpu, "src/PS/test.obj");
+                   Loader.load(cpu, "src/test.obj");
                } catch (FileNotFoundException e1) {
                    System.out.println(e1);
                    return;
