@@ -18,19 +18,18 @@ public class Main {
         //MACRO THINGS
         ob.namesTable(ob.macro);
         ob.callMacros(ob.macro);
+        ob.labels();
         ob.definitionTable(ob.macro);
         ob.expandCallMacro();
         ob.substituiParam();
         ob.removeNameMacro();
-        //ob.expandMacros();
-        //ob.removeCallMacro();
-        for(int i = 0; i < ob.extendedMacro.size(); i++) {
-            System.out.println(ob.getExtendedMacro(i));
-        }
-        //ob.writeMacro();
+        ob.expandMacros();
+        ob.removeCallMacro();
+        ob.saidaFinal();
+        ob.writeMacro();
 
         try {
-            mon.loadMontador("src/inputMontador.txt");
+            mon.loadMontador("src/entradaMontador.txt");
         } catch (
                 FileNotFoundException e1) {
             System.out.println(e1);

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Macro {
     public ArrayList<String> macro = new ArrayList<>();
+    public ArrayList<String> label = new ArrayList<>();
     public String[][] macroNames;
     public String[][] defTable;
     public int countLine = 0;
@@ -14,12 +15,16 @@ public class Macro {
     public ArrayList<String> functionCall = new ArrayList<>();
     public ArrayList<String> extendedMacro = new ArrayList<>();
     public ArrayList<String> finalMacro = new ArrayList<>();
+    public ArrayList<String> entradaMontador = new ArrayList<>();
     //
     public String[] macroNameAux;
     public String aux;
 
     public String getMacro(int position) {
         return macro.get(position);
+    }
+    public String getLabel(int position) {
+        return label.get(position);
     }
 
     public String getMacroNames(int line, int column) {
@@ -35,7 +40,10 @@ public class Macro {
     }
 
     public String getDefTable(int line, int column) {
-        return defTable[line][column];
+        if(defTable[line][column] == null || defTable[line][column].isEmpty())
+            return null;
+        else
+            return defTable[line][column];
     }
 
     public String getArraynames(int position) {
@@ -52,6 +60,9 @@ public class Macro {
 
     public String getFinalMacro(int position) {
         return finalMacro.get(position);
+    }
+    public String getEntradaMontador(int position) {
+        return entradaMontador.get(position);
     }
 
     public boolean loadMacro(String filename) throws FileNotFoundException {
@@ -70,9 +81,9 @@ public class Macro {
     }
 
     public void writeMacro() throws IOException {
-        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/saida.txt"));
-        for(int i=0; i<finalMacro.size();i++)
-            buffWrite.append(getFinalMacro(i) + "\n");
+        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/entradaMontador.txt"));
+        for(int i=0; i<entradaMontador.size();i++)
+            buffWrite.append(getEntradaMontador(i) + "\n");
 
         buffWrite.close();
     }
@@ -141,7 +152,7 @@ public class Macro {
     }
 
     public void definitionTable(ArrayList<String> macro) {
-        int cLine = 0, flag=0, k;
+        int cLine = 0, flag=0;
         defTable = new String[countLine][macro.size()];
         for (int i = 0; i < macro.size(); i++) {
             if (getMacro(i).equals("MACRO")) {
@@ -237,19 +248,19 @@ public class Macro {
 
     public void expandMacros() {
         String[] aux, auxDois;
-        auxDois = new String[arrayNames.size()];
+        auxDois = new String[macro.size()];
         int contColuna, cont = 0;
         for (int i = 0; i < extendedMacro.size(); i++) {
             aux = getExtendedMacro(i).split(" ");
             for (int j = 0; j < macroNames.length; j++) {
                 if (aux[0].equals(getMacroNames(j, 0))) {
-                    for (contColuna = 0; (getDefTable(j, contColuna) != null) && contColuna < arrayNames.size(); contColuna++) {
+                    for (contColuna = 0; contColuna < macro.size(); contColuna++) {
                         if ((getDefTable(j, contColuna) != null)) {
                             auxDois[cont] = getDefTable(j, contColuna);
                             cont++;
                         }
                     }
-                } else {
+                } else if (cont != 0){
                     String[] auxNameMacros, auxRealParam, auxTres;
                     int flag = 0;
                     auxNameMacros = auxDois[0].split(" ");
@@ -315,5 +326,44 @@ public class Macro {
             }
         }
 
+    }
+
+    public void labels(){
+        int contador = 0, flag = 0;
+        String[] aux;
+        for (int i = 0; i < macro.size(); i++) {
+            if (getMacro(i).equals("MACRO"))
+                contador++;
+        }
+        for (int i = 0; i < macro.size(); i++) {
+            if (getMacro(i).equals("MEND"))
+                contador--;
+            if (contador == 0 && i < macro.size()) {
+                for (int j = i + 1; j < macro.size(); j++) {
+                    aux = getMacro(j).split(" ");
+                    for(int k=0; k< macroNames.length; k++){
+                        if(aux[0].equals(getMacroNames(k, 0))){
+                            flag++;
+                        }
+                    }
+                    if(flag == 0){
+                        label.add(getMacro(j));
+                    }
+                    else{
+                        flag = 0;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public void saidaFinal(){
+        for(int i=0; i< finalMacro.size(); i++){
+            entradaMontador.add(getFinalMacro(i));
+        }
+        for(int j=0; j< label.size(); j++){
+            entradaMontador.add(getLabel(j));
+        }
     }
 }
