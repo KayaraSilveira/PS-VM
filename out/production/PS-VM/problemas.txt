@@ -25,7 +25,7 @@ memória 512 (que é 101 - 5 em binario) para o registrador A
 os STORE também não estão funcionando (STA, STL) a posição onde eles mandam armazenar fica Nula
 
 ----- Carregador -----
-Falta tratar os casos do Word que ocupam mais de 1 bye
+Falta tratar os casos do Word que ocupam mais de 1 bye *****RESOLVIDO*****
 
 ----- FALTANDO ----
 1. Ligar as saídas e entradas dos arquivos

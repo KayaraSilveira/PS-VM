@@ -61,13 +61,15 @@ public class Memory{
         addressInt = Conversion.stringBinaryToInt(address);
         for (j = 0; j < 3; j++) {
             for (i = 0; i < 8; i++) {
-                byteReturn = byteReturn + memory[addressInt][i];
+                byteReturn = byteReturn + memory[addressInt + j][i];
             }
         }
         return byteReturn;
     }
 
     public void setWord(String address, String value) {
+        System.out.println("VALUE: " + value);
+        value = Conversion.padLeftZeros(value, 24);
         /*
         System.out.println(value);
         System.out.println(address);

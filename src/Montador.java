@@ -52,9 +52,9 @@ public class Montador {
                     if(((sizeAux % 8) != 0) || (size == 0)) {
                         size++;
                     }
-                    positionA += size;
+                    positionA += 3 * size;
                 } else if(line[1].equals("RESB")) {
-                    positionA += Integer.parseInt(line[2]);
+                    positionA += 3 * Integer.parseInt(line[2]);
                 } else {
                     positionA += 3 * Integer.parseInt(line[2]);
                 }

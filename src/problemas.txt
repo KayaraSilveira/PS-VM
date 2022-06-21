@@ -19,13 +19,13 @@ SECONDVALUE WORD 10
 MEMVALUEE RESB 15
 EXTRAVALUE WORD 50
 
-------- CPU -------
+------- CPU ------- *****RESOLVIDO*****
 Está pegando um valor aleatório quando pede para carregar o conteudo da posição de
 memória 512 (que é 101 - 5 em binario) para o registrador A
 os STORE também não estão funcionando (STA, STL) a posição onde eles mandam armazenar fica Nula
 
------ Carregador -----
-Falta tratar os casos do Word que ocupam mais de 1 bye *****RESOLVIDO*****
+----- Carregador ----- *****RESOLVIDO*****
+Falta tratar os casos do Word que ocupam mais de 1 bye
 
 ----- FALTANDO ----
 1. Ligar as saídas e entradas dos arquivos

@@ -11,10 +11,8 @@ public class CPU {
 
     public void imprimeMem() {
         for(int i = 0; i < 1024; i++) {
-            System.out.println(mem.getByte(Conversion.intToStringBinary(i)));
+            System.out.println(i + ": " + mem.getByte(Conversion.intToStringBinary(i)));
         }
-        System.out.println("515:");
-        System.out.println(mem.getByte(Conversion.intToStringBinary(515)));
     }
     private boolean F2(String opcode, String operand) {
         //System.out.println("Entrou F2: "+opcode);
@@ -49,6 +47,7 @@ public class CPU {
         return true;
     }
     private String storeAddr(Flags flags, String addr) {
+        System.out.println("ADDR:" + addr);
         if(flags.isIndirect()){
             return mem.getWord(addr);
         }else{
