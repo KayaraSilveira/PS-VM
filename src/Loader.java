@@ -1,6 +1,8 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class Loader {
+
     public static String readString(Reader r, int len) throws IOException {
         StringBuilder buf = new StringBuilder();
         while (len-- > 0) buf.append((char)r.read());
@@ -41,70 +43,11 @@ public class Loader {
             }
             r.close();
 
-            /*if (r.read() == '\r') // eol
-                r.read();
-
-            while (line.contains("0")) {
-                line = readWord(r);
-                if (line.contains("0")) {
-                }
-                if (r.read() == '\r') // eol
-                    r.read();
-            }*/
-
-
-
-
-            //mem.setByte(Conversion.intToStringBinary(reg.getPC()), line);
-
-            //String line2 = readWord(r);
-
-            //System.out.println(line2);
-
-            //mem.setByte(Conversion.intToStringBinary(reg.getPC()), line2);
-            //reg.incPC();
-
-            //String line3 = readWord(r);
-
-            //System.out.println(line3);
-
-            //mem.setByte(Conversion.intToStringBinary(reg.getPC()), line3);
-            //reg.incPC();
-
-            //System.out.println(reg.getA());
-
-
-
-
-            //int len = readByte(r);
-            /*while (len-- > 0) {
-                if (loc < start || loc >= start + length) return false;
-                String val = Conversion.intToStringBinary(readByte(r));
-                mem.setByte(Conversion.intToStringBinary(loc++), val);
-            }
-            if (r.read() == '\r') // eol
-                r.read();
-            ch = r.read();
-
-
-            // modification records
-            while (ch == 'M') {
-                readWord(r);	// addr
-                readByte(r);	// len
-                if (r.read() == '\r') // EOL
-                    r.read();
-                ch = r.read();
-            }
-
-            // load end record
-            if (ch != 'E') return false;
-            reg.setPC(Conversion.intToStringBinary(readWord(r)));
-
-            System.out.println("Finished loading!");*/
         } catch (IOException e) {
             System.out.println(e);
             return false;
         }
         return true;
     }
+
 }

@@ -81,7 +81,7 @@ public class Macro {
     }
 
     public void writeMacro() throws IOException {
-        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/entradaMontador.txt"));
+        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/inputMontador.txt"));
         for(int i=0; i<entradaMontador.size();i++)
             buffWrite.append(getEntradaMontador(i) + "\n");
 

@@ -3,16 +3,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class Carregador {
+public class LoaderData {
 
     public final Memory mem;
     public int positionA = 512;
 
     Opcode opList = new Opcode();
     public ArrayList<String> montador = new ArrayList<>();
-    public Carregador(Memory mem) {
+    public LoaderData(Memory mem) {
         this.mem = mem;
         try {
             readTable("src/inputMontador.txt");
@@ -35,7 +34,7 @@ public class Carregador {
         }
     }
 
-    public void carregaMemoria() {
+    public void load() {
         String[] line;
         for(int i = 0; i < montador.size(); i++) {
             int flag = 0;
@@ -56,7 +55,6 @@ public class Carregador {
                     int size;
                     String binary;
                     binary = Conversion.intToStringBinary(Integer.parseInt(line[2]));
-                    System.out.println(binary);
                     binary = Conversion.padLeftZeros(binary, 3 * 8);
                     mem.setWord(Conversion.intToStringBinary(positionA), binary);
                     positionA += 3;
@@ -68,6 +66,8 @@ public class Carregador {
             }
         }
     }
+
+
 
 
 }

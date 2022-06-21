@@ -7,8 +7,10 @@ public class Main {
         Macro ob = new Macro();
         Montador mon = new Montador();
 
+        /*----------MACRO----------*/
+
         try {
-            ob.loadMacro("src/macro.txt");
+            ob.loadMacro("src/inputMacro.txt");
         } catch (
                 FileNotFoundException e1) {
             System.out.println(e1);
@@ -28,8 +30,10 @@ public class Main {
         ob.saidaFinal();
         ob.writeMacro();
 
+        /*----------MONTADOR----------*/
+
         try {
-            mon.loadMontador("src/entradaMontador.txt");
+            mon.loadMontador("src/inputMontador.txt");
         } catch (
                 FileNotFoundException e1) {
             System.out.println(e1);
@@ -41,14 +45,18 @@ public class Main {
         mon.writeMontador();
         mon.writeSymbolTable();
 
+        /*----------MACHINE----------*/
+
         CPU cpu = new CPU();
 
         try {
-            Loader.load(cpu, "src/saidaMontador.txt");
+            Loader.load(cpu, "src/inputMachine.txt");
         } catch (FileNotFoundException e1) {
             System.out.println(e1);
             return;
         }
+
+        /*----------SAÍDAS----------*/
 
         int i = 0;
 
@@ -68,7 +76,6 @@ public class Main {
             i++;
         }
         cpu.imprimeMem();
-
 
     }
 }

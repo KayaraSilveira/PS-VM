@@ -68,7 +68,6 @@ public class Memory{
     }
 
     public void setWord(String address, String value) {
-        System.out.println("VALUE: " + value);
         value = Conversion.padLeftZeros(value, 24);
         /*
         System.out.println(value);

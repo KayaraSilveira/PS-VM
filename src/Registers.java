@@ -38,7 +38,6 @@ public class Registers {
     public int getA() {return Conversion.stringBinaryToInt(A);}
 
     public String setVal(int val, Flags flags) {
-        System.out.println("val: " + val);
         if (getPC() >= val) {// return val
             return Conversion.intToStringBinary(val);
         } else if (flags.isImmediate()){
@@ -50,7 +49,6 @@ public class Registers {
         operand = mem.getWord(Conversion.intToStringBinary(val));
 
         if (flags.isIndirect()) operand = mem.getWord(operand);
-        System.out.println("Operando: " + operand);
         return operand;
             /*else if (mem.getWord(Conversion.intToStringBinary(val)).contains("null")) {
 

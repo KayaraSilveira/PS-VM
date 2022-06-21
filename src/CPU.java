@@ -1,12 +1,12 @@
 public class CPU {
     public final Registers reg;
     public final Memory mem;
-    public final Carregador carre;
+    public final LoaderData ld;
     public CPU() {
         this.mem = new Memory();
         this.reg = new Registers(this.mem);
-        this.carre = new Carregador(this.mem);
-        carre.carregaMemoria();
+        this.ld = new LoaderData(this.mem);
+        ld.load();
     }
 
     public void imprimeMem() {
@@ -47,7 +47,6 @@ public class CPU {
         return true;
     }
     private String storeAddr(Flags flags, String addr) {
-        System.out.println("ADDR:" + addr);
         if(flags.isIndirect()){
             return mem.getWord(addr);
         }else{
@@ -56,15 +55,15 @@ public class CPU {
     }
     private String loadWord(Flags flags, String operand) {
         if (flags.isImmediate()) return operand;
-        System.out.println("Operando Entrada: "+operand);
+        //System.out.println("Operando Entrada: "+operand);
 
         operand = mem.getWord(operand);
-        System.out.println("Operando meio: "+operand);
+        //System.out.println("Operando meio: "+operand);
 
         if (flags.isIndirect()) operand = mem.getWord(operand);
-        System.out.println("OPERANDO Saida: "+operand);
+        //System.out.println("OPERANDO Saida: "+operand);
 
-        System.out.println("Valor do 30: "+operand);
+        //System.out.println("Valor do 30: "+operand);
         return operand;
     }
     private boolean F3F4(String opcode, Flags flags, String operand)  {
@@ -83,9 +82,7 @@ public class CPU {
             case Opcode.STT:	mem.setWord(storeAddr(flags, operand), Conversion.intToStringBinary(reg.getT())); break;
             // jumps
             case Opcode.JEQ:
-                System.out.println("estou no JEQ");
                 if (reg.isEqual()){
-                    System.out.println("isqual: "+reg.isEqual());
                     reg.setPC(storeAddr(flags, operand)); break;}
             case Opcode.JGT:	if (reg.isGreater()) reg.setPC(storeAddr(flags, operand)); break;
             case Opcode.JLT:	if (reg.isLower()) reg.setPC(storeAddr(flags, operand)); break;
@@ -96,9 +93,7 @@ public class CPU {
             // loads
             case Opcode.LDA:    reg.setA(reg.setVal(Conversion.stringBinaryToInt(operand), flags)); break;
             case Opcode.LDX:
-                System.out.println("X: "+reg.getX());
                 reg.setX(reg.setVal(Conversion.stringBinaryToInt(operand), flags));
-                System.out.println("X: "+reg.getX());break;
             case Opcode.LDL:	reg.setL(reg.setVal(Conversion.stringBinaryToInt(operand), flags)); break;
             //case Opcode.LDCH:	reg.setALo(loadByte(flags, operand)); break;
             case Opcode.LDB:    reg.setB(reg.setVal(Conversion.stringBinaryToInt(operand), flags)); break;
@@ -135,7 +130,6 @@ public class CPU {
         String op = fetch();
         System.out.println("PC: "+reg.getPC());
         System.out.println("OPCODE: "+opcode);
-        System.out.println("Memoria: "+mem.getByte("1100"));
         // Formato 2
         if (F2(opcode, op)) return;
         // SIC, F3,  F4

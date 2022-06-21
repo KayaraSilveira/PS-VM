@@ -335,7 +335,6 @@ public class Montador {
                     nixbpeToBinary(j, i, true);
                     break;
                 default:
-                    System.out.println("linha: " + i + " Não achou instrução");
                     j--;
                     break;
             }
@@ -451,7 +450,7 @@ public class Montador {
     }
 
     public void writeMontador() throws IOException {
-        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/saidaMontador.txt"));
+        BufferedWriter buffWrite = new BufferedWriter(new FileWriter("src/inputMachine.txt"));
         for(int i=0; i<montadorFinal.size();i++)
             buffWrite.append(montadorFinal.get(i) + "\n");
 
